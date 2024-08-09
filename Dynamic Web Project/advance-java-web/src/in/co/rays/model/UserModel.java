@@ -68,7 +68,7 @@ public class UserModel {
 		Connection conn = JDBCDataSource.getConnection();
 
 		PreparedStatement pstmt = conn.prepareStatement(
-				"update user set first_name = ?, last_name = ?, login_id = ?, password = ?, dob = ?, address = ? where id = ?");
+				"update user set first_name = ?, last_name = ?, login_id = ?, password = ?, date = ?, address = ? where id = ?");
 
 		pstmt.setString(1, bean.getFirstName());
 		pstmt.setString(2, bean.getLastName());

@@ -20,6 +20,10 @@
 	<a href="UserCtl"><b>Add User</b></a>
 	<b>|</b>
 	<a href="UserListCtl"><b>User List</b></a>
+	<b>|</b>	
+		<a href="MarksheetCtl"><b>Add Marksheet</b></a>
+		<b>|</b>	
+		<a href="MarksheetListCtl"><b>Marksheet List</b></a>
 	<b>|</b>
 	<a href="LoginCtl?operation=logout"><b>Logout</b></a>
 	<%
