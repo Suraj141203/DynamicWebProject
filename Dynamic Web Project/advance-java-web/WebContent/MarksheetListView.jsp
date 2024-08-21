@@ -18,7 +18,7 @@
 		int index = ((pageNo - 1) * 5) + 1;
 	%>
 	<%@ include file="Header.jsp"%>
-	<form action="MarksheetListCtl" method="post">
+	<form action="MarksheetListCtl.do" method="post">
 		<div align="center">
 			<h1>Marksheet List</h1>
 			<%
@@ -35,9 +35,7 @@
 			<tr>
 				<th>Name:</th>
 				<td><input type="text" name="name"
-					placeholder="enter  name here">&nbsp; &nbsp;</td>
-				<th>RollNo:</th>
-				<td><input type="text" name="rollNo">&nbsp; &nbsp;</td>
+					placeholder="enter name here">&nbsp; &nbsp;</td>
 				<td><input type="submit" name="operation" value="search"></td>
 			</tr>
 		</table>
@@ -46,7 +44,7 @@
 			<tr>
 				<th>Select</th>
 				<th>S.No.</th>
-				<th>RollNo</th>
+				<th>Roll No.</th>
 				<th>Name</th>
 				<th>Physics</th>
 				<th>Chemistry</th>
@@ -67,7 +65,6 @@
 				<td align="center"><%=bean.getPhysics()%></td>
 				<td align="center"><%=bean.getChemistry()%></td>
 				<td align="center"><%=bean.getMaths()%></td>
-
 				<td align="center"><a href="MarksheetCtl?id=<%=bean.getId()%>">edit</a></td>
 			</tr>
 			<%

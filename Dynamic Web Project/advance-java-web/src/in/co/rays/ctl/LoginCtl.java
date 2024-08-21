@@ -12,9 +12,23 @@ import javax.servlet.http.HttpSession;
 
 import in.co.rays.bean.UserBean;
 import in.co.rays.model.UserModel;
+import in.co.rays.util.DataValidator;
 
 @WebServlet("/LoginCtl")
 public class LoginCtl extends HttpServlet {
+
+	public boolean validate(HttpServletRequest req) {
+		boolean checked = true;
+		if (DataValidator.isNull(req.getParameter("loginId"))) {
+			req.setAttribute("loginId", "login id is required");
+			checked = false;
+		}
+		if (DataValidator.isNull(req.getParameter("password"))) {
+			req.setAttribute("password", "password is required");
+			checked = false;
+		}
+		return checked;
+	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -35,32 +49,40 @@ public class LoginCtl extends HttpServlet {
 		String loginId = req.getParameter("loginId");
 		String password = req.getParameter("password");
 		String op = req.getParameter("operation");
-
-		if (op.equals("signIn")) {
-
-			UserModel model = new UserModel();
-
-			HttpSession session = req.getSession();
-
-			try {
-				UserBean bean = model.authenticate(loginId, password);
-				if (bean != null) {
-					session.setAttribute("user", bean);
-					resp.sendRedirect("WelcomeCtl");
-				} else {
-					req.setAttribute("msg", "Login ID & Password is invalid");
-					RequestDispatcher rd = req.getRequestDispatcher("LoginView.jsp");
-					rd.forward(req, resp);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-		}
+		String uri = req.getParameter("uri");
+		System.out.println("uri====> " + uri);
 
 		if (op.equals("signUp")) {
 			resp.sendRedirect("UserRegistrationCtl");
 		}
-	}
 
+		if (op.equals("signIn")) {
+
+			if (validate(req)) {
+
+				UserModel model = new UserModel();
+
+				HttpSession session = req.getSession();
+
+				try {
+					UserBean bean = model.authenticate(loginId, password);
+					if (bean != null) {
+						session.setAttribute("user", bean);
+						if (uri.equalsIgnoreCase("null")) {
+							resp.sendRedirect("WelcomeCtl");
+						} else {
+							resp.sendRedirect(uri);
+						}
+						return;
+					} else {
+						req.setAttribute("msg", "Login ID & Password is invalid");
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			RequestDispatcher rd = req.getRequestDispatcher("LoginView.jsp");
+			rd.forward(req, resp);
+		}
+	}
 }

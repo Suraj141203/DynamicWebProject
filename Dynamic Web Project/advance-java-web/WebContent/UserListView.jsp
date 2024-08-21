@@ -18,7 +18,7 @@
 		int index = ((pageNo - 1) * 5) + 1;
 	%>
 	<%@ include file="Header.jsp"%>
-	<form action="UserListCtl" method="post">
+	<form action="UserListCtl.do" method="post">
 		<div align="center">
 			<h1>User List</h1>
 			<%

@@ -9,12 +9,22 @@
 </head>
 <body>
 	<%@ include file="Header.jsp"%>
-	<form action="MarksheetCtl" method="post">
+	<form action="MarksheetCtl.do" method="post">
 		<div align="center">
-			<h1>Add Marksheet</h1>
 			<%
 				String msg = (String) request.getAttribute("msg");
 				MarksheetBean bean = (MarksheetBean) request.getAttribute("bean");
+			%>
+			<%
+				if (bean != null && bean.getId() > 0) {
+			%>
+			<h1>Update Marksheet</h1>
+			<%
+				} else {
+			%>
+			<h1>Add Marksheet</h1>
+			<%
+				}
 			%>
 			<%
 				if (msg != null) {
@@ -27,8 +37,13 @@
 			%>
 			<table>
 				<tr>
-					<th>RollNo:</th>
-					<td><input type="text" name="rollNo"
+					<th></th>
+					<td><input type="hidden" name="id"
+						value="<%=(bean != null) ? bean.getId() : ""%>"></td>
+				</tr>
+				<tr>
+					<th>Roll No.:</th>
+					<td><input type="number" name="rollNo"
 						value="<%=(bean != null) ? bean.getRollNo() : ""%>"></td>
 				</tr>
 				<tr>
@@ -38,24 +53,24 @@
 				</tr>
 				<tr>
 					<th>Physics:</th>
-					<td><input type="text" name="physics"
+					<td><input type="number" name="physics"
 						value="<%=(bean != null) ? bean.getPhysics() : ""%>"></td>
 				</tr>
 				<tr>
 					<th>Chemistry:</th>
-					<td><input type="text" name="chemistry"
+					<td><input type="number" name="chemistry"
 						value="<%=(bean != null) ? bean.getChemistry() : ""%>"></td>
 				</tr>
 				<tr>
 					<th>Maths:</th>
-					<td><input type="text" name="maths"
-						value="<%=(bean != null) ? bean.getMaths() : ""%>"></td>
-
+					<td><input type="number" name="maths"
+						value="<%=(bean != null) ? bean.getMaths() : ""%>"
+						style="width: 97%"></td>
 				</tr>
-
 				<tr>
 					<td></td>
-					<td><input type="submit" value="save"></td>
+					<td><input type="submit" name="operation"
+						value="<%=(bean != null) ? "update" : "save"%>"></td>
 				</tr>
 			</table>
 		</div>

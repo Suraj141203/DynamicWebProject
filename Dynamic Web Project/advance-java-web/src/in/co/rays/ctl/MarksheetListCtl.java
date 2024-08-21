@@ -1,6 +1,7 @@
 package in.co.rays.ctl;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -13,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import in.co.rays.bean.MarksheetBean;
 import in.co.rays.model.MarksheetModel;
 
-@WebServlet("/MarksheetListCtl")
+@WebServlet("/MarksheetListCtl.do")
 public class MarksheetListCtl extends HttpServlet {
 
 	@Override
@@ -45,9 +46,10 @@ public class MarksheetListCtl extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
 		String op = req.getParameter("operation");
 		String name = req.getParameter("name");
-		String rollNo = req.getParameter("rollNo");
 
 		int pageNo = 1;
 
@@ -60,12 +62,9 @@ public class MarksheetListCtl extends HttpServlet {
 		MarksheetModel model = new MarksheetModel();
 
 		if (op.equals("search")) {
+			pageNo = 1;
 			bean = new MarksheetBean();
 			bean.setName(name);
-			if (rollNo != "") {
-				System.out.println("roll = " + rollNo);
-				bean.setRollNo(Integer.parseInt(rollNo));
-			}
 		}
 
 		if (op.equals("previous")) {
@@ -77,10 +76,11 @@ public class MarksheetListCtl extends HttpServlet {
 		}
 
 		if (op.equals("add")) {
-			resp.sendRedirect("MarksheetCtl");
+			resp.sendRedirect("MarksheetCtl.do");
 		}
 
 		if (op.equals("delete")) {
+
 			pageNo = 1;
 			String[] ids = req.getParameterValues("ids");
 
@@ -114,4 +114,5 @@ public class MarksheetListCtl extends HttpServlet {
 		}
 
 	}
+
 }
